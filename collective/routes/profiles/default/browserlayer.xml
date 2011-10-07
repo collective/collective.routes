@@ -1,0 +1,4 @@
+<layers>
+    <layer name="collective.routes" 
+           interface="collective.routes.interfaces.ILayer" />
+</layers>

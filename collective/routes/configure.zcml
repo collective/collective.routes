@@ -1,0 +1,46 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="collective.routes">
+
+  <adapter factory=".RouteTraverser" />
+
+  <browser:page
+    name="view"
+    for=".interfaces.IFragmentContext"
+    class=".views.FragmentView"
+    permission="zope2.View"
+    />
+
+  <genericsetup:registerProfile
+    name="default"
+    title="Routes"
+    directory="profiles/default"
+    description="A Routes implementation for plone"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
+  
+  <browser:resource
+    name="routes.png"
+    file="routes.png"
+  />
+
+  <browser:page
+    name="routes-settings"
+    for="Products.CMFCore.interfaces._content.ISiteRoot"
+    class=".views.ControlPanelView"
+    permission="cmf.ManagePortal"
+  />
+
+  <include package="Products.CMFPlone" />
+  <browser:page
+    for=".interfaces.IWrappedItem"
+    name="breadcrumbs_view"
+    class=".views.WrappedBreadcrumbs"
+    permission="zope.Public"
+    allowed_attributes="breadcrumbs"
+    />
+  
+</configure>
