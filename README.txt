@@ -7,15 +7,15 @@ is querying the portal catalog.
 
 Example Route::
 	
-	/posts/{effective:year}/{effective:month}/{effective:day}
+	  /posts/{effective:year}/{effective:month}/{effective:day}
 
 
 To add a route::
 	
-	from collective.routes import addRoute
-	addRoute('BlogItems',
-			 '/posts/{effective:year}/{effective:month}/{effective:day}',
-			 defaultQuery={'portal_type': 'News Item'})
+	 from collective.routes import addRoute
+	 addRoute('BlogItems',
+	 	'/posts/{effective:year}/{effective:month}/{effective:day}',
+	 	defaultQuery={'portal_type': 'News Item'})
 
 
 Enable it
@@ -47,8 +47,8 @@ Exmaple Urls::
 Definition::
 
     addRoute('Blog Posts',
-         '/posts/{effective:year}/{effective:month}/{effective:day}',
-        defaultQuery={'portal_type': 'News Item',
+      '/posts/{effective:year}/{effective:month}/{effective:day}',
+      defaultQuery={'portal_type': 'News Item',
                       'sort_on': 'effective',
                       'sort_order': 'reverse'})
 
@@ -59,13 +59,93 @@ Tagged
     `/tagged/{Subject}/{Subject}/{Subject}`
 
 Example Urls::
+
     /tagged/foo ~ Show all posts tagged `foo`
     /tagged/foo/bar ~ Show all posts tagged `foo` and `bar`
     /tagged/foo/bar/woo ~ Show all posts tagged `foo`, `bar` and `woo`
 
 Definition::
+
     addRoute('Tagged',
          '/tagged/{Subject}/{Subject}/{Subject}',
          defaultQuery={'portal_type': 'News Item',
                        'sort_on': 'effective',
                        'sort_order': 'reverse'})
+
+Route Syntax
+------------
+
+The syntax is really basic and only has a few variations.
+
+Literal
+~~~~~~~
+
+Literal string match::
+
+    /string-to-match
+
+Will match "string-to-match"
+
+
+Query
+~~~~~
+
+Match anything and maintain it as a query parameter::
+
+    /{Subject}
+
+Will match any string and then keep the value as a query
+parameter to be used for a portal_catalog query.
+
+
+Date Query
+~~~~~~~~~~
+
+Has three sub-directives to match part parts::
+
+    /{effective:year}/{effective:month}/{effective:day}
+
+Which will then put together a query for the portal_catalog to
+use.
+
+
+Customize Object Retrieval
+--------------------------
+
+If you'd prefer to bypass the normal portal_catalog query
+to retrieve your object, you can provide your own object
+finder method.
+
+Example::
+
+    def customObjectFinder(context, **kwargs):
+        query = context.query
+        site = getSite()
+        return site[query['id']]
+
+    addRoute('My Route',
+         '/my-route/{id}',
+         objectFinder=customObjectFinder)
+
+
+Fiddle with published object
+----------------------------
+
+If you'd like to be able to add interfaces at the last moment
+before the traversal is published, this is what you'd use.
+
+This can be useful for adding interfaces since the actual 
+published object is wrapped so breadcrumbs are maintained
+on publishing.
+
+Example::
+
+    from interfaces import IMySpecialContext
+    from zope.interface import alsoProvides
+
+    def myMungeMethod(context):
+        alsoProvides(context, IMySpecialContext)
+
+    addRoute('My Route',
+         '/foo/{bar}',
+         mungeObject=myMungeMethod)
