@@ -1,20 +1,28 @@
+# -*- coding: utf-8 -*-
+
+from Acquisition import aq_parent
+from DateTime import DateTime
+from zope.component import adapts
+from zope.component import getMultiAdapter
+from zope.i18nmessageid import MessageFactory
 from zope.interface import alsoProvides
+from zope.publisher.interfaces import IRequest
 from zExceptions import NotFound
+from ZPublisher.BaseRequest import DefaultPublishTraverse
+from Products.ZCatalog.Lazy import LazyCat
 from Products.ZCatalog.Lazy import LazyMap
+
+from Products.CMFCore.interfaces._content import ISiteRoot
+from Products.CMFCore.utils import getToolByName
+
+from collective.routes.content import FragmentContext
 from collective.routes.content import WrappedBrainsContext
 from collective.routes.content import WrappedObjectContext
-from Products.ZCatalog.Lazy import LazyCat
-from zope.component import adapts
-from Products.CMFCore.interfaces._content import ISiteRoot
-from DateTime import DateTime
-from Products.CMFCore.utils import getToolByName
-from zope.publisher.interfaces import IRequest
-from ZPublisher.BaseRequest import DefaultPublishTraverse
-from collective.routes.content import FragmentContext
 from collective.routes.finders import catalogObjectFinder
 from collective.routes.interfaces import IWrappedItem
 from collective.routes.interfaces import ILayer
 
+_ = MessageFactory('collective.routes')
 
 _routes = {}
 

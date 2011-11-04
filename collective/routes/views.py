@@ -18,7 +18,7 @@ from collective.routes import getRouteNames
 from collective.routes import getObject
 from collective.routes.interfaces import IWrappedObjectContext
 from collective.routes.interfaces import IWrappedBrainsContext
-
+from collective.routes import _
 
 class FragmentView(BrowserView):
 
