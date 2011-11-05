@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<object name="portal_controlpanel" 
+    meta_type="Plone Control Panel Tool"
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n" 
+    i18n:domain="collective.routes">
+
+    <configlet title="Routes" action_id="routes" remove="True" purge="True"
+        appId="collective.routes" category="Products" condition_expr=""
+        url_expr="string:${portal_url}/@@routes-settings"
+        icon_expr="string:${portal_url}/++resource++routes.png"
+        visible="True" i18n:attributes="title">
+        <permission>Manage Portal</permission>
+    </configlet>
+
+</object>

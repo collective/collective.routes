@@ -48,4 +48,6 @@
     allowed_attributes="breadcrumbs"
     />
   
+  <include file="upgrades.zcml" />
+  
 </configure>

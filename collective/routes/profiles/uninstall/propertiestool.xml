@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<object name="portal_properties" meta_type="Plone Properties Tool">
+ <object name="routes_properties" meta_type="Plone Property Sheet" remove="True">
+  <property name="title" remove="True">Routes properties</property>
+  <property name="activated_routes" type="lines" remove="True">
+  </property>
+ </object>
+</object>
