@@ -48,8 +48,7 @@ class IRoutesSettings(Interface):
 class RoutesSettingsEditForm(controlpanel.RegistryEditForm):
     schema = IRoutesSettings
     label = _(u'Routes Settings')
-    description = _(u'Here you can modify the settings for '
-                     'Routes.')
+    description = _(u'Here you can modify the settings for Routes.')
 
     def updateFields(self):
         super(RoutesSettingsEditForm, self).updateFields()

@@ -5,7 +5,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="collective.routes">
 
-  <!--i18n:registerTranslations directory="locales" /-->
+  <i18n:registerTranslations directory="locales" />
   <includeDependencies package="." />
 
   <adapter factory=".traverser.RouteTraverser" />
@@ -24,7 +24,7 @@
     description="A Routes implementation for plone"
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
-  
+
   <browser:resource
     name="routes.png"
     file="routes.png"
@@ -49,7 +49,7 @@
     permission="zope.Public"
     allowed_attributes="breadcrumbs"
     />
-  
+
   <include file="upgrades.zcml" />
-  
+
 </configure>

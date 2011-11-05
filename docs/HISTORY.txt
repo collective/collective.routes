@@ -4,7 +4,10 @@ Changelog
 1.1a1 (unreleased)
 ------------------
 
-- move to using plone.app.registry
+- Added Spanish translation
+  [hvelarde]
+- Move to using plone.app.registry
+  [saibatizoku]
 
 
 1.0a1 (2011-10-07)
