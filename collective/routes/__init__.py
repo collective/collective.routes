@@ -124,7 +124,8 @@ class RouteTraverser(DefaultPublishTraverse):
                 props = pprops.routes_properties
                 activated_routes = props.getProperty('activated_routes', ())
 
-                path = request.environ['PATH_INFO'].split('/')
+                #path = request.environ['PATH_INFO'].split('/')
+                path = request.physicalPathFromURL(request['URL'])
                 context_path = self.context.getPhysicalPath()
                 path = path[len(context_path):]
 
