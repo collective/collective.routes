@@ -1,9 +1,14 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:grok="http://namespaces.zope.org/grok"
     xmlns:i18n="http://namespaces.zope.org/i18n"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="collective.routes">
+
+  <!--i18n:registerTranslations directory="locales" /-->
+  <includeDependencies package="." />
+  <grok:grok package="." />
 
   <adapter factory=".RouteTraverser" />
 
@@ -30,9 +35,16 @@
   <browser:page
     name="routes-settings"
     for="Products.CMFCore.interfaces._content.ISiteRoot"
-    class=".views.ControlPanelView"
+    class=".controlpanel.RoutesConfiglet"
     permission="cmf.ManagePortal"
   />
+
+  <!--browser:page
+    name="routes-settings"
+    for="Products.CMFCore.interfaces._content.ISiteRoot"
+    class=".views.ControlPanelView"
+    permission="cmf.ManagePortal"
+  /-->
 
   <include package="Products.CMFPlone" />
   <browser:page
