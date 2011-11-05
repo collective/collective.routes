@@ -1,7 +1,13 @@
 Changelog
 =========
 
-1.0a1 (unreleased)
+1.1a1 (unreleased)
+------------------
+
+- move to using plone.app.registry
+
+
+1.0a1 (2011-10-07)
 ------------------
 
 - Initial release
