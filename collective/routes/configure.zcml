@@ -39,13 +39,6 @@
     permission="cmf.ManagePortal"
   />
 
-  <!--browser:page
-    name="routes-settings"
-    for="Products.CMFCore.interfaces._content.ISiteRoot"
-    class=".views.ControlPanelView"
-    permission="cmf.ManagePortal"
-  /-->
-
   <include package="Products.CMFPlone" />
   <browser:page
     for=".interfaces.IWrappedItem"

@@ -5,20 +5,14 @@ from Acquisition import aq_inner
 from zExceptions import NotFound
 
 from Products.Five import BrowserView
-from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.interfaces import INavigationBreadcrumbs
 from Products.CMFPlone.browser.navigation import get_view_url
 from Products.CMFPlone import utils
 
-from wtforms import Form, SelectMultipleField
-
-from collective.wtforms.views import WTFormControlPanelView
-
-from collective.routes import getRouteNames
 from collective.routes import getObject
 from collective.routes.interfaces import IWrappedObjectContext
 from collective.routes.interfaces import IWrappedBrainsContext
-from collective.routes import _
+
 
 class FragmentView(BrowserView):
 
@@ -34,36 +28,6 @@ class FragmentView(BrowserView):
         else:
             raise NotFound
         return view()
-
-
-class ControlPanelForm(Form):
-    selected_routes = SelectMultipleField("Available Routes")
-
-
-class ControlPanelView(WTFormControlPanelView):
-    formClass = ControlPanelForm
-    buttons = ('Save', 'Cancel')
-    label = u'Routes Configuration'
-    description = u'Configure which routes should be enabled here'
-    wrapWithFieldset = False
-
-    @property
-    def properties(self):
-        pprops = getToolByName(self.context, 'portal_properties')
-        return pprops.routes_properties
-
-    @property
-    def data(self):
-        activated_routes = self.properties.getProperty('activated_routes', ())
-        return {'selected_routes': activated_routes}
-
-    def mungeForm(self, form):
-        form.selected_routes.choices = [(n, n) for n in getRouteNames()]
-
-    def submit(self, button):
-        if button == 'Save' and self.validate():
-            self.properties.activated_routes = \
-                tuple(self.form.selected_routes.data)
 
 
 class WrappedBreadcrumbs(BrowserView):
