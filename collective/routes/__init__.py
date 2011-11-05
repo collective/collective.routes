@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-
 
-from Acquisition import aq_parent
-from DateTime import DateTime
+from collective.routes.controlpanel import IRoutesSettings
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
+
 from zope.component import adapts
-from zope.component import getMultiAdapter
 from zope.i18nmessageid import MessageFactory
 from zope.interface import alsoProvides
 from zope.publisher.interfaces import IRequest
@@ -13,7 +14,6 @@ from Products.ZCatalog.Lazy import LazyCat
 from Products.ZCatalog.Lazy import LazyMap
 
 from Products.CMFCore.interfaces._content import ISiteRoot
-from Products.CMFCore.utils import getToolByName
 
 from collective.routes.content import FragmentContext
 from collective.routes.content import WrappedBrainsContext
@@ -120,9 +120,9 @@ class RouteTraverser(DefaultPublishTraverse):
             return DefaultPublishTraverse.publishTraverse(self, request, name)
         except KeyError:
             if ILayer.providedBy(request):
-                pprops = getToolByName(self.context, 'portal_properties')
-                props = pprops.routes_properties
-                activated_routes = props.getProperty('activated_routes', ())
+                registry = getUtility(IRegistry)
+                settings = registry.forInterface(IRoutesSettings)
+                activated_routes = settings.routes
 
                 #path = request.environ['PATH_INFO'].split('/')
                 path = request.physicalPathFromURL(request['URL'])

@@ -1,4 +1,6 @@
-from Products.CMFCore.utils import getToolByName
+from collective.routes.controlpanel import IRoutesSettings
+from zope.component import getUtility
+from plone.registry.interfaces import IRegistry
 from zExceptions import NotFound
 from collective.routes.testing import browserLogin
 from collective.routes.testing import createObject
@@ -38,9 +40,9 @@ class TestRoutes(unittest.TestCase):
         browserLogin(self.portal, self.browser)
 
     def activateRoutes(self):
-        pprops = getToolByName(self.portal, 'portal_properties')
-        props = pprops.routes_properties
-        props.activated_routes = ('foobar', 'foobar1', 'foobar2')
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IRoutesSettings)
+        settings.routes = set(('foobar', 'foobar1', 'foobar2'))
 
     def test_route_works(self):
         self.browser.open(self.portal.absolute_url() + '/2010/10/10')
@@ -51,9 +53,9 @@ class TestRoutes(unittest.TestCase):
             self.browser.open(self.portal.absolute_url() + '/foobar')
 
     def test_not_run_if_not_activated(self):
-        pprops = getToolByName(self.portal, 'portal_properties')
-        props = pprops.routes_properties
-        props.activated_routes = ()
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(IRoutesSettings)
+        settings.routes = set([])
         transaction.commit()
 
         with self.assertRaises(NotFound):
