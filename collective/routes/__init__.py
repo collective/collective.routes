@@ -1,26 +1,15 @@
 # -*- coding: utf-8 -*-
 
-from collective.routes.controlpanel import IRoutesSettings
-from zope.component import getUtility
-from plone.registry.interfaces import IRegistry
-
-from zope.component import adapts
 from zope.i18nmessageid import MessageFactory
 from zope.interface import alsoProvides
-from zope.publisher.interfaces import IRequest
 from zExceptions import NotFound
-from ZPublisher.BaseRequest import DefaultPublishTraverse
 from Products.ZCatalog.Lazy import LazyCat
 from Products.ZCatalog.Lazy import LazyMap
 
-from Products.CMFCore.interfaces._content import ISiteRoot
-
-from collective.routes.content import FragmentContext
 from collective.routes.content import WrappedBrainsContext
 from collective.routes.content import WrappedObjectContext
 from collective.routes.finders import catalogObjectFinder
 from collective.routes.interfaces import IWrappedItem
-from collective.routes.interfaces import ILayer
 
 _ = MessageFactory('collective.routes')
 
@@ -110,38 +99,6 @@ def getRoute(name):
 
 def getRouteNames():
     return _routes.keys()
-
-
-class RouteTraverser(DefaultPublishTraverse):
-    adapts(ISiteRoot, IRequest)
-
-    def publishTraverse(self, request, name):
-        try:
-            return DefaultPublishTraverse.publishTraverse(self, request, name)
-        except KeyError:
-            if ILayer.providedBy(request):
-                registry = getUtility(IRegistry)
-                settings = registry.forInterface(IRoutesSettings)
-                activated_routes = settings.routes
-
-                #path = request.environ['PATH_INFO'].split('/')
-                path = request.physicalPathFromURL(request['URL'])
-                context_path = self.context.getPhysicalPath()
-                path = path[len(context_path):]
-
-                for route_name in activated_routes:
-                    route = getRoute(route_name)
-                    if not route:
-                        continue
-                    if route.fragments[0].matches(path[0]):
-                        fragments = route.fragments
-                        fragment = fragments[0]
-                        query = route.defaultQuery.copy()
-                        query.update(fragment.query(name))
-                        return FragmentContext(self.context, request, name,
-                            route, fragments[0], fragments[1:],
-                            query).__of__(self.context)
-            raise
 
 
 def getObject(route, context, request):

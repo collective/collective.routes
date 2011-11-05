@@ -1,6 +1,5 @@
 # -*- encoding: utf-8 -*-
 
-from five import grok
 from zope import schema
 from zope.schema.interfaces import IVocabularyFactory
 from zope.schema.vocabulary import SimpleVocabulary
@@ -31,9 +30,7 @@ class RoutesVocabulary(object):
                                                      route.name,
                                                      route.name))
         return SimpleVocabulary(items)
-
-grok.global_utility(RoutesVocabulary,
-                    name=u'collective.routes.Routes')
+RoutesVocabularyFactory = RoutesVocabulary()
 
 
 class IRoutesSettings(Interface):
