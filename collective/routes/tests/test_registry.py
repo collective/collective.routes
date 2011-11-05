@@ -65,8 +65,7 @@ class RegistryUninstallTest(unittest.TestCase):
         self.registry = getUtility(IRegistry)
         # uninstall the package
         self.qi = getattr(self.portal, 'portal_quickinstaller')
-        self.qi.uninstallProducts(products=['collective.routes',])
-        #del self.registry.records['collective.routes.controlpanel.IRoutesSettings.html_source']
+        self.qi.uninstallProducts(products=['collective.routes'])
 
     def test_records_removed_from_registry(self):
         records = [
