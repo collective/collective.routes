@@ -4,7 +4,7 @@ Changelog
 1.1a1 (unreleased)
 ------------------
 
-- Added Spanish translation
+- Added Spanish and Brazilian Portuguese translations
   [hvelarde]
 - Move to using plone.app.registry
   [saibatizoku]
