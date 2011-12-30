@@ -1,0 +1,30 @@
+# Héctor Velarde <hector.velarde@gmail.com>, 2011.
+msgid ""
+msgstr ""
+"Project-Id-Version: collective.routes\n"
+"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"PO-Revision-Date: 2011-12-29 19:57-0600\n"
+"Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
+"Language-Team: Portuguese <https://github.com/collective>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Domain: collective.routes\n"
+
+#: ./collective/routes/controlpanel.py:39
+msgid "Available Routes"
+msgstr "Rotas disponíveis"
+
+#: ./collective/routes/controlpanel.py:51
+msgid "Here you can modify the settings for Routes."
+msgstr "Aqui você pode modificar as configurações de rotas."
+
+#: ./collective/routes/profiles/default/controlpanel.xml
+#: ./collective/routes/profiles/uninstall/controlpanel.xml
+msgid "Routes"
+msgstr "Rotas"
+
+#: ./collective/routes/controlpanel.py:50
+msgid "Routes Settings"
+msgstr "Configurações de rotas"
+
