@@ -6,8 +6,12 @@ Changelog
 
 - Added Spanish and Brazilian Portuguese translations
   [hvelarde]
+
 - Move to using plone.app.registry
   [saibatizoku]
+
+- Make work with plone.locking
+  [vangheem]
 
 
 1.0a1 (2011-10-07)

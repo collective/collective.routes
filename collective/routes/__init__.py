@@ -10,6 +10,7 @@ from collective.routes.content import WrappedBrainsContext
 from collective.routes.content import WrappedObjectContext
 from collective.routes.finders import catalogObjectFinder
 from collective.routes.interfaces import IWrappedItem
+from plone.locking.interfaces import ITTWLockable
 
 _ = MessageFactory('collective.routes')
 
@@ -101,6 +102,11 @@ def getRouteNames():
     return _routes.keys()
 
 
+def mungeAllObject(wrapped):
+    if ITTWLockable.providedBy(wrapped.obj):
+        alsoProvides(wrapped, ITTWLockable)
+
+
 def getObject(route, context, request):
     finder = route.objectFinder
     result = finder(context)
@@ -113,6 +119,7 @@ def getObject(route, context, request):
     else:
         alsoProvides(result, IWrappedItem)
         wrapped = WrappedObjectContext(context, request, result)
+        mungeAllObject(wrapped)
         if route.mungeObject:
             route.mungeObject(wrapped)
     return wrapped.__of__(context)
