@@ -141,7 +141,6 @@ def getObject(route, context, request):
             raise NotFound
         wrapped = WrappedBrainsContext(context, request, result)
     else:
-        alsoProvides(result, IWrappedItem)
         wrapped = WrappedObjectContext(context, request, result)
         mungeAllObject(wrapped)
         if route.mungeObject:

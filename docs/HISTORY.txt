@@ -17,6 +17,10 @@ Changelog
   in route configuration
   [vangheem]
 
+- do not apply IWrappedContext interface
+  [vangheem]
+
+
 1.0a1 (2011-10-07)
 ------------------
 
