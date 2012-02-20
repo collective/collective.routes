@@ -22,7 +22,6 @@ class RouteTraverser(DefaultPublishTraverse):
                 settings = registry.forInterface(IRoutesSettings)
                 activated_routes = settings.routes
 
-                #path = request.environ['PATH_INFO'].split('/')
                 path = request.physicalPathFromURL(request['URL'])
                 context_path = self.context.getPhysicalPath()
                 path = path[len(context_path):]

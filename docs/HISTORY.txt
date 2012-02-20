@@ -13,6 +13,9 @@ Changelog
 - Make work with plone.locking
   [vangheem]
 
+- provide ability to specify the view to traverse to
+  in route configuration
+  [vangheem]
 
 1.0a1 (2011-10-07)
 ------------------

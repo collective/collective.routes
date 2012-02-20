@@ -11,10 +11,22 @@ from collective.routes.content import WrappedObjectContext
 from collective.routes.finders import catalogObjectFinder
 from collective.routes.interfaces import IWrappedItem
 from plone.locking.interfaces import ITTWLockable
+from Products.Archetypes.interfaces import IBaseObject
 
 _ = MessageFactory('collective.routes')
 
 _routes = {}
+_interfaces_to_munge_with = (
+    ITTWLockable,
+    IBaseObject
+)
+
+
+def addInterfaceMunge(*ifaces):
+    def meth(context):
+        for iface in ifaces:
+            alsoProvides(context, iface)
+    return meth
 
 
 class Fragment(object):
@@ -27,6 +39,9 @@ class Fragment(object):
 
     def query(self, path):
         return {}
+
+    def __unicode__(self):
+        return u'name: %s' % self.name
 
 
 class DateFragment(Fragment):
@@ -45,6 +60,9 @@ class DateFragment(Fragment):
     def query(self, path):
         return {self.name + '__' + self._type: int(path)}
 
+    def __unicode__(self):
+        return u'date(%s) : %s' % (self._type, self.name)
+
 
 class QueryFragment(Fragment):
 
@@ -58,22 +76,27 @@ class QueryFragment(Fragment):
     def query(self, path):
         return {self.name: path}
 
+    def __unicode__(self):
+        return u'query(%s): %s' % (self._type, self.name)
+
 
 class Route(object):
 
     def __init__(self, name, route, fragments, defaultQuery,
-                 objectFinder=catalogObjectFinder, mungeObject=None):
+                 objectFinder=catalogObjectFinder, mungeObject=None,
+                 customViewName=None):
         self.name = name
         self.route = route
         self.fragments = fragments
         self.defaultQuery = defaultQuery
         self.objectFinder = objectFinder
         self.mungeObject = mungeObject
+        self.customViewName = customViewName
 
 
 def addRoute(routeName, route, defaultQuery={},
              objectFinder=catalogObjectFinder,
-             mungeObject=None):
+             mungeObject=None, customViewName=None):
     if route.startswith('/'):
         route = route[1:]
 
@@ -91,7 +114,7 @@ def addRoute(routeName, route, defaultQuery={},
             fragments.append(Fragment(query))
 
     _routes[routeName] = Route(routeName, route, fragments, defaultQuery,
-                               objectFinder, mungeObject)
+                               objectFinder, mungeObject, customViewName)
 
 
 def getRoute(name):
@@ -103,8 +126,9 @@ def getRouteNames():
 
 
 def mungeAllObject(wrapped):
-    if ITTWLockable.providedBy(wrapped.obj):
-        alsoProvides(wrapped, ITTWLockable)
+    for iface in _interfaces_to_munge_with:
+        if iface.providedBy(wrapped.obj):
+            alsoProvides(wrapped, iface)
 
 
 def getObject(route, context, request):

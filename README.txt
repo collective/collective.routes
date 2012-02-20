@@ -149,3 +149,14 @@ Example::
     addRoute('My Route',
          '/foo/{bar}',
          mungeObject=myMungeMethod)
+
+
+Customize view rendered
+-----------------------
+
+You can customize the view that is rendered for the found
+object also::
+
+    addRoute('My Route',
+         '/foo/{bar}',
+         customViewName='@@custom-view')

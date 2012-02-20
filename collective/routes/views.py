@@ -20,7 +20,9 @@ class FragmentView(BrowserView):
         route = self.context.route
         wrapped = getObject(route, self.context, self.request)
 
-        if IWrappedBrainsContext.providedBy(wrapped):
+        if route.customViewName:
+            view = wrapped.restrictedTraverse(route.customViewName)
+        elif IWrappedBrainsContext.providedBy(wrapped):
             view = wrapped.restrictedTraverse('folder_summary_view')
         elif IWrappedObjectContext.providedBy(wrapped):
             layout = wrapped.obj.getLayout()
@@ -42,6 +44,9 @@ class WrappedBreadcrumbs(BrowserView):
         context = aq_inner(self.context)
         request = self.request
 
+        if hasattr(context, 'breadcrumbs'):
+            return context.breadcrumbs()
+
         # XXX this is the main part here:
         # to up 2 parents since the current context
         # is wrapped
@@ -49,7 +54,6 @@ class WrappedBreadcrumbs(BrowserView):
         try:
             name, item_url = get_view_url(context)
         except AttributeError:
-            print context
             raise
 
         view = getMultiAdapter((container, request), name='breadcrumbs_view')
