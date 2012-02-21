@@ -1,3 +1,4 @@
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 from zope.interface import Interface
 from OFS.interfaces import IItem
 
@@ -23,4 +24,8 @@ class IWrappedItem(Interface):
 
 
 class ILayer(Interface):
+    pass
+
+
+class IRoutedRequest(IDefaultBrowserLayer):
     pass

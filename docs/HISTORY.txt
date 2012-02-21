@@ -20,6 +20,10 @@ Changelog
 - do not apply IWrappedContext interface
   [vangheem]
 
+- add IRoutedRequest layer dynamically to request when
+  routing request so you can override specific parts of
+  plone only when routed.
+  [vangheem]
 
 1.0a1 (2011-10-07)
 ------------------

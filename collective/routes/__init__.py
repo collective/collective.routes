@@ -9,9 +9,9 @@ from Products.ZCatalog.Lazy import LazyMap
 from collective.routes.content import WrappedBrainsContext
 from collective.routes.content import WrappedObjectContext
 from collective.routes.finders import catalogObjectFinder
-from collective.routes.interfaces import IWrappedItem
 from plone.locking.interfaces import ITTWLockable
 from Products.Archetypes.interfaces import IBaseObject
+from collective.routes.interfaces import IRoutedRequest
 
 _ = MessageFactory('collective.routes')
 
@@ -145,6 +145,7 @@ def getObject(route, context, request):
         mungeAllObject(wrapped)
         if route.mungeObject:
             route.mungeObject(wrapped)
+    alsoProvides(request, IRoutedRequest)
     return wrapped.__of__(context)
 
 

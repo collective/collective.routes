@@ -15,6 +15,7 @@
     for=".interfaces.IFragmentContext"
     class=".views.FragmentView"
     permission="zope2.View"
+    layer=".interfaces.ILayer"
     />
 
   <genericsetup:registerProfile
@@ -38,15 +39,17 @@
     name="routes-settings"
     for="Products.CMFCore.interfaces._content.ISiteRoot"
     class=".controlpanel.RoutesConfiglet"
+    layer=".interfaces.ILayer"
     permission="cmf.ManagePortal"
   />
 
   <include package="Products.CMFPlone" />
   <browser:page
-    for=".interfaces.IWrappedItem"
+    for="*"
     name="breadcrumbs_view"
     class=".views.WrappedBreadcrumbs"
     permission="zope.Public"
+    layer=".interfaces.IRoutedRequest"
     allowed_attributes="breadcrumbs"
     />
 
