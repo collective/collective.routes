@@ -45,6 +45,10 @@ class TestRoutes(unittest.TestCase):
                  defaultQuery={'portal_type': 'News Item',
                                'effectiveDate': '2010/10/10'},
                  customPredicates=customPredicate)
+        addRoute('foobar4',
+                 '/foobar4/{effective:year}/{effective:month}/{effective:day}',
+                 defaultQuery={'portal_type': 'News Item'},
+                 allowPartialMatch=False)
         folder = createObject(self.portal, 'Folder', 'folder')
         createObject(folder, 'News Item', 'test1',
             title="Test 1", effectiveDate="2010/10/10")
@@ -60,7 +64,7 @@ class TestRoutes(unittest.TestCase):
     def activateRoutes(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IRoutesSettings)
-        settings.routes = set(('foobar', 'foobar1', 'foobar2',
+        settings.routes = set(('foobar', 'foobar1', 'foobar2', 'foobar4',
                                'customBreadcrumbs', 'customPredicate'))
 
     def test_route_works(self):
@@ -109,3 +113,16 @@ class TestRoutes(unittest.TestCase):
         self.browser.open(
             self.portal.absolute_url() + '/customPredicate?magic=1')
         self.assertTrue('Test 1' in self.browser.contents)
+
+    def test_allow_partial_match_is_not_enforced(self):
+        with self.assertRaises(NotFound):
+            self.browser.open(self.portal.absolute_url() + '/foobar4/2010')
+
+    def test_allow_partial_match_is_not_enforced_with_month(self):
+        with self.assertRaises(NotFound):
+            self.browser.open(self.portal.absolute_url() + '/foobar4/2010/10')
+
+    def test_allow_partial_match_false_allows_full_match_yet(self):
+        self.browser.open(self.portal.absolute_url() + '/foobar4/2010/10/10')
+        self.assertTrue('Test 1' in self.browser.contents)
+        self.assertTrue('Test 2' not in self.browser.contents)

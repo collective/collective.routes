@@ -51,7 +51,8 @@ Definition::
       '/posts/{effective:year}/{effective:month}/{effective:day}',
       defaultQuery={'portal_type': 'News Item',
                       'sort_on': 'effective',
-                      'sort_order': 'reverse'})
+                      'sort_order': 'reverse'},
+      allowPartialMatch=True)
 
 tagged content
 ~~~~~~~~~~~~~~

@@ -26,7 +26,6 @@ class RouteTraverser(DefaultPublishTraverse):
                     request.get('ACTUAL_URL', ''))
                 context_path = self.context.getPhysicalPath()
                 fullpath = fullpath[len(context_path):]
-
                 for route_name in activated_routes:
                     route = getRoute(route_name)
                     if not route:

@@ -112,6 +112,8 @@ class Route(object):
             query = fragment.query(fragpath)
             match = True
         if match:
+            if len(path) != len(self.fragments) and not self.allowPartialMatch:
+                return False
             for predicate in self.customPredicates:
                 if not predicate(request, query):
                     return False

@@ -25,6 +25,18 @@ Changelog
   plone only when routed.
   [vangheem]
 
+- add ability to provide custom predicates
+  [vangheem]
+
+- add ability to provide a custom breadcrumb factory
+  [vangheem]
+
+- added addRoute parameter of allowPartialMatch so that
+  you do not have to match an entire url when matching
+  url against a route.
+  [vangheem]
+
+
 1.0a1 (2011-10-07)
 ------------------
 
