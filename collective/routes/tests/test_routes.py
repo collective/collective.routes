@@ -15,6 +15,10 @@ def customBreadcrumbFactory(c, r):
              'Title': 'Custom breadcrumb title'},)
 
 
+def customPredicate(req, q):
+    return req.get('magic', False)
+
+
 class TestRoutes(unittest.TestCase):
 
     layer = Routes_FUNCTIONAL_TESTING
@@ -33,11 +37,14 @@ class TestRoutes(unittest.TestCase):
         addRoute('foobar2',
                  '/foobar2/{Subject}',
                  defaultQuery={'portal_type': 'News Item'})
-        addRoute('customBreadcrumbs',
-                 '/foobar3',
+        addRoute('customBreadcrumbs', '/foobar3',
                  defaultQuery={'portal_type': 'News Item',
                                'effectiveDate': '2010/10/10'},
                  breadcrumbFactory=customBreadcrumbFactory)
+        addRoute('customPredicate', '/customPredicate',
+                 defaultQuery={'portal_type': 'News Item',
+                               'effectiveDate': '2010/10/10'},
+                 customPredicates=customPredicate)
         folder = createObject(self.portal, 'Folder', 'folder')
         createObject(folder, 'News Item', 'test1',
             title="Test 1", effectiveDate="2010/10/10")
@@ -54,7 +61,7 @@ class TestRoutes(unittest.TestCase):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IRoutesSettings)
         settings.routes = set(('foobar', 'foobar1', 'foobar2',
-                               'customBreadcrumbs'))
+                               'customBreadcrumbs', 'customPredicate'))
 
     def test_route_works(self):
         self.browser.open(self.portal.absolute_url() + '/2010/10/10')
@@ -93,3 +100,12 @@ class TestRoutes(unittest.TestCase):
         self.browser.open(self.portal.absolute_url() + '/foobar3')
         self.assertTrue('Test 1' in self.browser.contents)
         self.assertTrue('Custom breadcrumb title' in self.browser.contents)
+
+    def test_customPredicates_forces_404(self):
+        with self.assertRaises(NotFound):
+            self.browser.open(self.portal.absolute_url() + '/customPredicate')
+
+    def test_customPredicates_works(self):
+        self.browser.open(
+            self.portal.absolute_url() + '/customPredicate?magic=1')
+        self.assertTrue('Test 1' in self.browser.contents)

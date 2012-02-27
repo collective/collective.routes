@@ -84,10 +84,10 @@ class QueryFragment(Fragment):
 
 class Route(object):
 
-    def __init__(self, name, route, fragments, defaultQuery,
+    def __init__(self, name, route, fragments, defaultQuery={},
                  objectFinder=catalogObjectFinder, mungeObject=None,
                  customViewName=None, allowPartialMatch=False,
-                 breadcrumbFactory=None):
+                 breadcrumbFactory=None, customPredicates=[]):
         self.name = name
         self.route = route
         self.fragments = fragments
@@ -97,24 +97,31 @@ class Route(object):
         self.customViewName = customViewName
         self.allowPartialMatch = allowPartialMatch
         self.breadcrumbFactory = breadcrumbFactory
+        self.customPredicates = customPredicates
 
-    def matches(self, path):
+    def matches(self, path, request):
+        query = {}
         match = False
         for idx, fragpath in enumerate(path):
             fragment = self.fragments[idx]
             if not fragment.matches(fragpath):
                 if match and self.allowPartialMatch:
-                    return True
+                    break
                 else:
                     return False
+            query = fragment.query(fragpath)
             match = True
+        if match:
+            for predicate in self.customPredicates:
+                if not predicate(request, query):
+                    return False
         return match
 
 
 def addRoute(routeName, route, defaultQuery={},
              objectFinder=catalogObjectFinder, mungeObject=None,
              customViewName=None, allowPartialMatch=False,
-             breadcrumbFactory=None):
+             breadcrumbFactory=None, customPredicates=[]):
     if route.startswith('/'):
         route = route[1:]
 
@@ -131,9 +138,14 @@ def addRoute(routeName, route, defaultQuery={},
         else:
             fragments.append(Fragment(query))
 
-    _routes[routeName] = Route(routeName, route, fragments, defaultQuery,
-                               objectFinder, mungeObject, customViewName,
-                               allowPartialMatch, breadcrumbFactory)
+    if type(customPredicates) not in (list, tuple, set):
+        customPredicates = [customPredicates]
+
+    _routes[routeName] = Route(routeName, route, fragments,
+        defaultQuery=defaultQuery, objectFinder=objectFinder,
+        mungeObject=mungeObject, customViewName=customViewName,
+        allowPartialMatch=allowPartialMatch,
+        breadcrumbFactory=breadcrumbFactory, customPredicates=customPredicates)
 
 
 def getRoute(name):

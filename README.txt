@@ -198,3 +198,9 @@ breadcrumbFactory(defaults to None)
     Override breadcrumb generation. Must return a tuple of
     {'absolute_url': url, 'Title': title} values.
 
+customPredicates(defaults to [])
+    An iterable of custom predicate functions(s) to check against the incoming request
+    that they match. A predicate must take 2 parameters(`request`, `query`) where `request`
+    is the current request object and `query` is the currently generated query
+    from the route. The function must return a boolean. True if it matches, False it doesn't.
+

@@ -31,7 +31,7 @@ class RouteTraverser(DefaultPublishTraverse):
                     route = getRoute(route_name)
                     if not route:
                         continue
-                    if route.matches(fullpath):
+                    if route.matches(fullpath, request):
                         fragments = route.fragments
                         fragment = fragments[0]
                         query = route.defaultQuery.copy()
