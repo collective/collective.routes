@@ -44,8 +44,8 @@ class WrappedBreadcrumbs(BrowserView):
         context = aq_inner(self.context)
         request = self.request
 
-        if hasattr(context, 'breadcrumbs'):
-            return context.breadcrumbs()
+        if hasattr(context, 'route') and context.route.breadcrumbFactory:
+            return context.route.breadcrumbFactory(context, request)
 
         # XXX this is the main part here:
         # to up 2 parents since the current context
@@ -54,7 +54,6 @@ class WrappedBreadcrumbs(BrowserView):
         try:
             name, item_url = get_view_url(context)
         except AttributeError:
-            import pdb; pdb.set_trace()
             raise
 
         view = getMultiAdapter((container, request), name='breadcrumbs_view')

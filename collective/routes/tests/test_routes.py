@@ -10,6 +10,11 @@ import unittest2 as unittest
 from collective.routes.testing import Routes_FUNCTIONAL_TESTING
 
 
+def customBreadcrumbFactory(c, r):
+    return ({'absolute_url': '/custombreadcrumburl',
+             'Title': 'Custom breadcrumb title'},)
+
+
 class TestRoutes(unittest.TestCase):
 
     layer = Routes_FUNCTIONAL_TESTING
@@ -28,6 +33,11 @@ class TestRoutes(unittest.TestCase):
         addRoute('foobar2',
                  '/foobar2/{Subject}',
                  defaultQuery={'portal_type': 'News Item'})
+        addRoute('customBreadcrumbs',
+                 '/foobar3',
+                 defaultQuery={'portal_type': 'News Item',
+                               'effectiveDate': '2010/10/10'},
+                 breadcrumbFactory=customBreadcrumbFactory)
         folder = createObject(self.portal, 'Folder', 'folder')
         createObject(folder, 'News Item', 'test1',
             title="Test 1", effectiveDate="2010/10/10")
@@ -43,7 +53,8 @@ class TestRoutes(unittest.TestCase):
     def activateRoutes(self):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(IRoutesSettings)
-        settings.routes = set(('foobar', 'foobar1', 'foobar2'))
+        settings.routes = set(('foobar', 'foobar1', 'foobar2',
+                               'customBreadcrumbs'))
 
     def test_route_works(self):
         self.browser.open(self.portal.absolute_url() + '/2010/10/10')
@@ -77,3 +88,8 @@ class TestRoutes(unittest.TestCase):
         self.browser.open(self.portal.absolute_url() + '/foobar2/foobar')
         self.assertTrue('Test 2' in self.browser.contents)
         self.assertTrue('Test 1' not in self.browser.contents)
+
+    def test_custom_breadcrumbs(self):
+        self.browser.open(self.portal.absolute_url() + '/foobar3')
+        self.assertTrue('Test 1' in self.browser.contents)
+        self.assertTrue('Custom breadcrumb title' in self.browser.contents)

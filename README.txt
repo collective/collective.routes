@@ -193,3 +193,8 @@ allowPartialMatch(defaults to False)
     If the whole url is not matched, you can still attempt to publish it.
     This can be useful for catalog finder routes where you want to allow
     the user to provide partial urls and still find objects.
+
+breadcrumbFactory(defaults to None)
+    Override breadcrumb generation. Must return a tuple of
+    {'absolute_url': url, 'Title': title} values.
+

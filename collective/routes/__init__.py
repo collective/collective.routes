@@ -86,7 +86,8 @@ class Route(object):
 
     def __init__(self, name, route, fragments, defaultQuery,
                  objectFinder=catalogObjectFinder, mungeObject=None,
-                 customViewName=None, allowPartialMatch=False):
+                 customViewName=None, allowPartialMatch=False,
+                 breadcrumbFactory=None):
         self.name = name
         self.route = route
         self.fragments = fragments
@@ -95,6 +96,7 @@ class Route(object):
         self.mungeObject = mungeObject
         self.customViewName = customViewName
         self.allowPartialMatch = allowPartialMatch
+        self.breadcrumbFactory = breadcrumbFactory
 
     def matches(self, path):
         match = False
@@ -111,7 +113,8 @@ class Route(object):
 
 def addRoute(routeName, route, defaultQuery={},
              objectFinder=catalogObjectFinder, mungeObject=None,
-             customViewName=None, allowPartialMatch=False):
+             customViewName=None, allowPartialMatch=False,
+             breadcrumbFactory=None):
     if route.startswith('/'):
         route = route[1:]
 
@@ -130,7 +133,7 @@ def addRoute(routeName, route, defaultQuery={},
 
     _routes[routeName] = Route(routeName, route, fragments, defaultQuery,
                                objectFinder, mungeObject, customViewName,
-                               allowPartialMatch)
+                               allowPartialMatch, breadcrumbFactory)
 
 
 def getRoute(name):
