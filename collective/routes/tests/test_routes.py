@@ -20,7 +20,8 @@ class TestRoutes(unittest.TestCase):
         self.request = self.layer['request']
         addRoute('foobar',
                  '/{effective:year}/{effective:month}/{effective:day}',
-                 defaultQuery={'portal_type': 'News Item'})
+                 defaultQuery={'portal_type': 'News Item'},
+                 allowPartialMatch=True)
         addRoute('foobar1',
                  '/foobar1/{effective:year}/{effective:month}/{effective:day}',
                  defaultQuery={'portal_type': 'News Item'})

@@ -15,7 +15,8 @@ To add a route::
 	 from collective.routes import addRoute
 	 addRoute('BlogItems',
 	 	'/posts/{effective:year}/{effective:month}/{effective:day}',
-	 	defaultQuery={'portal_type': 'News Item'})
+	 	defaultQuery={'portal_type': 'News Item'},
+        allowPartialMatch=True)
 
 
 Enable it
@@ -70,7 +71,8 @@ Definition::
          '/tagged/{Subject}/{Subject}/{Subject}',
          defaultQuery={'portal_type': 'News Item',
                        'sort_on': 'effective',
-                       'sort_order': 'reverse'})
+                       'sort_order': 'reverse'},
+         allowPartialMatch=True)
 
 Route Syntax
 ------------
@@ -160,3 +162,34 @@ object also::
     addRoute('My Route',
          '/foo/{bar}',
          customViewName='@@custom-view')
+
+
+addRoute Signature
+------------------
+
+Allow arguments
+
+routeName(required)
+    Name of route
+
+route(required)
+    Actual route specification
+
+defaultQuery(defaults to {})
+    Default query to provide the finder with
+
+objectFinder(defaults to collective.routes.finders.catalogObjectFinder)
+    The method used to find the result published object
+
+mungeObject(defaults to None)
+    Since the real published is a wrapper object, this is a method to
+    be able to mess with the temporary wrapper object before 
+    publication
+
+customViewName(defaults to None)
+    Custom view to render for the found object
+
+allowPartialMatch(defaults to False)
+    If the whole url is not matched, you can still attempt to publish it.
+    This can be useful for catalog finder routes where you want to allow
+    the user to provide partial urls and still find objects.

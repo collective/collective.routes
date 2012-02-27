@@ -54,6 +54,7 @@ class WrappedBreadcrumbs(BrowserView):
         try:
             name, item_url = get_view_url(context)
         except AttributeError:
+            import pdb; pdb.set_trace()
             raise
 
         view = getMultiAdapter((container, request), name='breadcrumbs_view')

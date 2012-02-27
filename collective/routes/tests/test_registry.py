@@ -1,3 +1,4 @@
+from zope.interface import alsoProvides
 # -*- coding: utf-8 -*-
 
 import unittest2 as unittest
@@ -15,6 +16,7 @@ from Products.CMFCore.utils import getToolByName
 
 from collective.routes.controlpanel import IRoutesSettings
 from collective.routes.testing import Routes_INTEGRATION_TESTING
+from collective.routes.interfaces import ILayer
 
 BASE_REGISTRY = 'collective.routes.controlpanel.IRoutesSettings.%s'
 
@@ -29,6 +31,9 @@ class RegistryTest(unittest.TestCase):
         # set up settings registry
         self.registry = Registry()
         self.registry.registerInterface(IRoutesSettings)
+
+        request = self.portal.REQUEST
+        alsoProvides(request, ILayer)
 
     def test_controlpanel_view(self):
         view = getMultiAdapter((self.portal, self.portal.REQUEST),

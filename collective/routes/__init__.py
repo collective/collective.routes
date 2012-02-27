@@ -1,4 +1,6 @@
+from zope.app.component.hooks import getSite
 # -*- coding: utf-8 -*-
+import re
 
 from zope.i18nmessageid import MessageFactory
 from zope.interface import alsoProvides
@@ -84,7 +86,7 @@ class Route(object):
 
     def __init__(self, name, route, fragments, defaultQuery,
                  objectFinder=catalogObjectFinder, mungeObject=None,
-                 customViewName=None):
+                 customViewName=None, allowPartialMatch=False):
         self.name = name
         self.route = route
         self.fragments = fragments
@@ -92,11 +94,24 @@ class Route(object):
         self.objectFinder = objectFinder
         self.mungeObject = mungeObject
         self.customViewName = customViewName
+        self.allowPartialMatch = allowPartialMatch
+
+    def matches(self, path):
+        match = False
+        for idx, fragpath in enumerate(path):
+            fragment = self.fragments[idx]
+            if not fragment.matches(fragpath):
+                if match and self.allowPartialMatch:
+                    return True
+                else:
+                    return False
+            match = True
+        return match
 
 
 def addRoute(routeName, route, defaultQuery={},
-             objectFinder=catalogObjectFinder,
-             mungeObject=None, customViewName=None):
+             objectFinder=catalogObjectFinder, mungeObject=None,
+             customViewName=None, allowPartialMatch=False):
     if route.startswith('/'):
         route = route[1:]
 
@@ -114,7 +129,8 @@ def addRoute(routeName, route, defaultQuery={},
             fragments.append(Fragment(query))
 
     _routes[routeName] = Route(routeName, route, fragments, defaultQuery,
-                               objectFinder, mungeObject, customViewName)
+                               objectFinder, mungeObject, customViewName,
+                               allowPartialMatch)
 
 
 def getRoute(name):

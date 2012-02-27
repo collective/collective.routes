@@ -22,15 +22,16 @@ class RouteTraverser(DefaultPublishTraverse):
                 settings = registry.forInterface(IRoutesSettings)
                 activated_routes = settings.routes
 
-                path = request.physicalPathFromURL(request['URL'])
+                fullpath = request.physicalPathFromURL(
+                    request.get('ACTUAL_URL', ''))
                 context_path = self.context.getPhysicalPath()
-                path = path[len(context_path):]
+                fullpath = fullpath[len(context_path):]
 
                 for route_name in activated_routes:
                     route = getRoute(route_name)
                     if not route:
                         continue
-                    if route.fragments[0].matches(path[0]):
+                    if route.matches(fullpath):
                         fragments = route.fragments
                         fragment = fragments[0]
                         query = route.defaultQuery.copy()
@@ -38,4 +39,5 @@ class RouteTraverser(DefaultPublishTraverse):
                         return FragmentContext(self.context, request, name,
                             route, fragments[0], fragments[1:],
                             query).__of__(self.context)
+
             raise

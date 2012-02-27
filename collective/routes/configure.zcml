@@ -45,7 +45,7 @@
 
   <include package="Products.CMFPlone" />
   <browser:page
-    for="*"
+    for=".interfaces.IWrappedContext"
     name="breadcrumbs_view"
     class=".views.WrappedBreadcrumbs"
     permission="zope.Public"
