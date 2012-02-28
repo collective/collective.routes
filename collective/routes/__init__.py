@@ -24,6 +24,10 @@ _interfaces_to_munge_with = (
 )
 
 
+def initialize(context):
+    pass
+
+
 def addInterfaceMunge(*ifaces):
     def meth(context):
         for iface in ifaces:

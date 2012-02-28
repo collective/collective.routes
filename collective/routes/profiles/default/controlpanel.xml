@@ -9,7 +9,7 @@
         url_expr="string:${portal_url}/@@routes-settings"
         icon_expr="string:${portal_url}/++resource++routes.png"
         visible="True" i18n:attributes="title">
-        <permission>Manage Portal</permission>
+        <permission>Manage portal</permission>
     </configlet>
 
 </object>

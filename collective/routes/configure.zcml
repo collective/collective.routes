@@ -1,10 +1,12 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:i18n="http://namespaces.zope.org/i18n"
+    xmlns:five="http://namespaces.zope.org/five"
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     xmlns:browser="http://namespaces.zope.org/browser"
     i18n_domain="collective.routes">
 
+  <five:registerPackage package="." initialize=".initialize" />
   <i18n:registerTranslations directory="locales" />
   <includeDependencies package="." />
 
@@ -23,6 +25,13 @@
     title="Routes"
     directory="profiles/default"
     description="A Routes implementation for plone"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
+  <genericsetup:registerProfile
+    name="uninstall"
+    title="Routes Uninstall"
+    directory="profiles/default"
+    description="Uninstall Routes"
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 

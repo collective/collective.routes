@@ -9,6 +9,7 @@ from zope.component import getUtility
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import logout
 from plone.app.testing import setRoles
+from plone.app.testing import applyProfile
 from plone.registry import Registry
 from plone.registry.interfaces import IRegistry
 
