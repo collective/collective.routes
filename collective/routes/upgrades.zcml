@@ -4,11 +4,11 @@
   i18n_domain="collective.routes">
 
   <gs:upgradeStep
-    title="Upgrade collective.routes to 1.0a1 from 1.1a1"
+    title="Upgrade collective.routes to 1.0* from 1.1*"
     description="collective.routes upgrade step"
     source="*"
     destination="1100"
-    handler=".upgrades.upgrade_to_1_1a1"
+    handler=".upgrades.upgrade_to_1_1"
     profile="collective.routes:default" /> 
              
 </configure>
