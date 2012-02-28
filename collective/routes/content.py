@@ -20,6 +20,8 @@ from collective.routes.utils import smart_update
 class WrappedContext(SimpleItem):
     implements(IWrappedContext, IBrowserPublisher)
 
+    portal_type = meta_type = 'TemporaryWrappedItem'
+
     def __init__(self, context, request, obj=None):
         super(WrappedContext, self).__init__(context, request)
         self.__parent__ = context
@@ -126,6 +128,8 @@ class WrappedBrainsContext(WrappedContext):
 
 class FragmentContext(SimpleItem):
     implements(IFragmentContext, IBrowserPublisher)
+
+    portal_type = meta_type = 'TemporaryFragmentItem'
 
     def __init__(self, context, request, name, route, fragment, fragments=[],
                  query={}):

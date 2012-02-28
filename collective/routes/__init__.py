@@ -103,6 +103,11 @@ class Route(object):
         query = {}
         match = False
         for idx, fragpath in enumerate(path):
+            if idx >= len(self.fragments):
+                if match and self.allowPartialMatch:
+                    break
+                else:
+                    return False
             fragment = self.fragments[idx]
             if not fragment.matches(fragpath):
                 if match and self.allowPartialMatch:

@@ -3,11 +3,15 @@ from zope.interface import Interface
 from OFS.interfaces import IItem
 
 
-class IFragmentContext(IItem):
+class IRouteContext(IItem):
     pass
 
 
-class IWrappedContext(IItem):
+class IFragmentContext(IRouteContext):
+    pass
+
+
+class IWrappedContext(IRouteContext):
     pass
 
 

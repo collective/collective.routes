@@ -1,3 +1,4 @@
+from zope.app.component.hooks import getSite
 from zope.interface import implements
 from zope.component import getMultiAdapter
 
@@ -12,6 +13,8 @@ from Products.CMFPlone import utils
 from collective.routes import getObject
 from collective.routes.interfaces import IWrappedObjectContext
 from collective.routes.interfaces import IWrappedBrainsContext
+from collective.routes.interfaces import IWrappedContext
+from collective.routes.interfaces import IFragmentContext
 
 
 class FragmentView(BrowserView):
@@ -50,11 +53,11 @@ class WrappedBreadcrumbs(BrowserView):
         # XXX this is the main part here:
         # to up 2 parents since the current context
         # is wrapped
-        container = utils.parent(utils.parent(context))
-        try:
-            name, item_url = get_view_url(context)
-        except AttributeError:
-            raise
+        if IWrappedContext.providedBy(context):
+            container = utils.parent(utils.parent(context))
+        elif IFragmentContext.providedBy(context):
+            container = getSite()
+        name, item_url = get_view_url(context)
 
         view = getMultiAdapter((container, request), name='breadcrumbs_view')
         base = tuple(view.breadcrumbs())
