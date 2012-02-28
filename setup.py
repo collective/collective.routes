@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.1a1dev'
+version = '1.1a1'
 
 
 setup(name='collective.routes',
