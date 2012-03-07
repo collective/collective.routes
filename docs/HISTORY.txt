@@ -1,6 +1,15 @@
 Changelog
 =========
 
+1.1a2 (unreleased)
+------------------
+
+- Added Italian translation
+  [giacomos]
+
+- Added some i18n strings and 2 script for i18n rebuild
+  [giacomos]
+
 1.1a1 (2012-02-28)
 ------------------
 
