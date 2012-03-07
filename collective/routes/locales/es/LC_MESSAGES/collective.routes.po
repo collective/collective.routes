@@ -2,29 +2,41 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: collective.routes\n"
-"POT-Creation-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"POT-Creation-Date: 2012-03-07 22:56+0000\n"
 "PO-Revision-Date: 2011-12-29 19:57-0600\n"
 "Last-Translator: Héctor Velarde <hector.velarde@gmail.com>\n"
 "Language-Team: Spanish <https://github.com/collective>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
 "Domain: collective.routes\n"
 
-#: ./collective/routes/controlpanel.py:39
+#: ../../routes/configure.zcml:27
+msgid "A Routes implementation for plone"
+msgstr ""
+
+#: ../../routes/controlpanel.py:39
 msgid "Available Routes"
 msgstr "Rutas disponibles"
 
-#: ./collective/routes/controlpanel.py:51
+#: ../../routes/controlpanel.py:51
 msgid "Here you can modify the settings for Routes."
 msgstr "Aquí puede modificar la configuración de Rutas."
 
-#: ./collective/routes/profiles/default/controlpanel.xml
-#: ./collective/routes/profiles/uninstall/controlpanel.xml
+#: ../../routes/profiles/default/controlpanel.xml
+#: ../../routes/profiles/uninstall/controlpanel.xml
 msgid "Routes"
 msgstr "Rutas"
 
-#: ./collective/routes/controlpanel.py:50
+#: ../../routes/controlpanel.py:50
 msgid "Routes Settings"
 msgstr "Configuración de Rutas"
+
+#: ../../routes/controlpanel.py:40
+msgid "Select one or more routes to activate them"
+msgstr ""
 
