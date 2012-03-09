@@ -1,4 +1,7 @@
 <?xml version="1.0"?>
 <registry>
     <records interface="collective.routes.controlpanel.IRoutesSettings" />
+    <dependencies>
+     <dependency>profile-plone.app.registry:default</dependency>
+    </dependencies>
 </registry>
