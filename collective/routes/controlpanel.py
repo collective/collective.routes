@@ -37,7 +37,7 @@ class IRoutesSettings(Interface):
     """ Interface describing the settings on the control panel """
     routes = schema.Set(
             title=_(u"Available Routes"),
-            description=_(u""),
+            description=_(u"Select one or more routes to activate them"),
             value_type=schema.Choice(vocabulary=u"collective.routes.Routes"),
             default=set([]),
             missing_value=set([]),

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-03-07 22:56+0000\n"
+"POT-Creation-Date: 2012-03-07 22:52+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,25 +20,3 @@ msgstr ""
 #: ../../routes/configure.zcml:27
 msgid "A Routes implementation for plone"
 msgstr ""
-
-#: ../../routes/controlpanel.py:39
-msgid "Available Routes"
-msgstr ""
-
-#: ../../routes/controlpanel.py:51
-msgid "Here you can modify the settings for Routes."
-msgstr ""
-
-#: ../../routes/profiles/default/controlpanel.xml
-#: ../../routes/profiles/uninstall/controlpanel.xml
-msgid "Routes"
-msgstr ""
-
-#: ../../routes/controlpanel.py:50
-msgid "Routes Settings"
-msgstr ""
-
-#: ../../routes/controlpanel.py:40
-msgid "Select one or more routes to activate them"
-msgstr ""
-
