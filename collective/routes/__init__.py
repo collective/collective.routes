@@ -1,4 +1,7 @@
-from zope.app.component.hooks import getSite
+try:
+    from zope.site.hooks import getSite
+except:
+    from zope.app.component.hooks import getSite
 # -*- coding: utf-8 -*-
 import re
 

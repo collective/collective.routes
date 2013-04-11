@@ -1,4 +1,7 @@
-from zope.app.component.hooks import getSite
+try:
+    from zope.site.hooks import getSite
+except:
+    from zope.app.component.hooks import getSite
 from zope.publisher.interfaces.browser import IBrowserPublisher
 from zope.component import queryMultiAdapter
 from zope.interface import implements
